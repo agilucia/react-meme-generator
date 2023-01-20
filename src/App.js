@@ -57,6 +57,11 @@ export default function App() {
           <option value="gandalf" />
           <option value="doge" />
           <option value="cryingfloor" />
+          <option value="agnes" />
+          <option value="bilbo" />
+          <option value="bender" />
+          <option value="drowning" />
+          <option value="drunk" />
         </datalist>
       </label>
       <br />
