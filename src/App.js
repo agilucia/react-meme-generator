@@ -5,21 +5,33 @@ import './style.css';
 export default function App() {
   const [top, setTop] = useState('');
   const [bottom, setBottom] = useState('');
-  const [meme, setMeme] = useState('both');
+  const [meme, setMeme] = useState('cryingfloor');
   const memeUrls = (memes, tops, bottoms) => {
     if (!tops && !bottoms) {
       return `https://api.memegen.link/images/${memes}.png`;
     } else if (!bottoms) {
-      return `https://api.memegen.link/images/${memes}/${tops}.png`;
+      return `https://api.memegen.link/images/${memes}/${tops
+        .replace('?', '~q')
+        .replace('#', '~h')
+        .replace('/', '~s')}.png`;
     } else if (!tops) {
-      return `https://api.memegen.link/images/${memes}/_/${bottoms}.png`;
+      return `https://api.memegen.link/images/${memes}/_/${bottoms
+        .replace('?', '~q')
+        .replace('#', '~h')
+        .replace('/', '~s')}.png`;
     } else {
-      return `https://api.memegen.link/images/${memes}/${tops}/${bottoms}.png`;
+      return `https://api.memegen.link/images/${memes}/${tops
+        .replace('?', '~q')
+        .replace('#', '~h')
+        .replace('/', '~s')}/${bottoms
+        .replace('?', '~q')
+        .replace('#', '~h')
+        .replace('/', '~s')}.png`;
     }
   };
 
   return (
-    <div className="whole">
+    <div className="section">
       <h1>React Meme Generator</h1>
       <br />
       <div>
@@ -33,11 +45,19 @@ export default function App() {
       <label className="inputfield">
         Meme template
         <input
+          list="templates"
           value={meme}
           onChange={(event) => {
             setMeme(event.currentTarget.value);
           }}
         />
+        <datalist id="templates">
+          <option value="buzz" />
+          <option value="disastergirl" />
+          <option value="gandalf" />
+          <option value="doge" />
+          <option value="cryingfloor" />
+        </datalist>
       </label>
       <br />
       <label className="inputfield">
