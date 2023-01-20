@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { saveAs } from 'file-saver';
+import './style.css';
 
 export default function App() {
   const [top, setTop] = useState('');
   const [bottom, setBottom] = useState('');
-  const [meme, setMeme] = useState('spiderman');
+  const [meme, setMeme] = useState('both');
   const memeUrls = (memes, tops, bottoms) => {
     if (!tops && !bottoms) {
       return `https://api.memegen.link/images/${memes}.png`;
@@ -18,7 +19,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className="whole">
       <h1>React Meme Generator</h1>
       <br />
       <div>
@@ -29,7 +30,7 @@ export default function App() {
         />
       </div>
       <br />
-      <label>
+      <label className="inputfield">
         Meme template
         <input
           value={meme}
@@ -39,7 +40,7 @@ export default function App() {
         />
       </label>
       <br />
-      <label>
+      <label className="inputfield">
         Top text
         <input
           value={top}
@@ -49,7 +50,7 @@ export default function App() {
         />
       </label>
       <br />
-      <label>
+      <label className="inputfield">
         Bottom text
         <input
           value={bottom}
