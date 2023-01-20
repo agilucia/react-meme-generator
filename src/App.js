@@ -1,26 +1,29 @@
 import { useState } from 'react';
 import { saveAs } from 'file-saver';
 import './style.css';
+import axios from 'axios';
 
 export default function App() {
   const [top, setTop] = useState('');
   const [bottom, setBottom] = useState('');
   const [meme, setMeme] = useState('cryingfloor');
-  const memeUrls = (memes, tops, bottoms) => {
+  const [memes, setMemes] = useState([]);
+
+  const memeUrls = (images, tops, bottoms) => {
     if (!tops && !bottoms) {
-      return `https://api.memegen.link/images/${memes}.png`;
+      return `https://api.memegen.link/images/${images}.png`;
     } else if (!bottoms) {
-      return `https://api.memegen.link/images/${memes}/${tops
+      return `https://api.memegen.link/images/${images}/${tops
         .replace('?', '~q')
         .replace('#', '~h')
         .replace('/', '~s')}.png`;
     } else if (!tops) {
-      return `https://api.memegen.link/images/${memes}/_/${bottoms
+      return `https://api.memegen.link/images/${images}/_/${bottoms
         .replace('?', '~q')
         .replace('#', '~h')
         .replace('/', '~s')}.png`;
     } else {
-      return `https://api.memegen.link/images/${memes}/${tops
+      return `https://api.memegen.link/images/${images}/${tops
         .replace('?', '~q')
         .replace('#', '~h')
         .replace('/', '~s')}/${bottoms
@@ -29,6 +32,15 @@ export default function App() {
         .replace('/', '~s')}.png`;
     }
   };
+
+  axios
+    .get('https://api.memegen.link/templates/')
+    .then(function (response) {
+      setMemes(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
   return (
     <div className="section">
@@ -42,6 +54,18 @@ export default function App() {
         />
       </div>
       <br />
+      <label>
+        <select
+          value={meme}
+          onChange={(event) => setMeme(event.currentTarget.value)}
+        >
+          {memes.map((image) => (
+            <option value={image.id} key={image.id}>
+              {image.id}
+            </option>
+          ))}
+        </select>
+      </label>
       <label className="inputfield">
         Meme template
         <input
